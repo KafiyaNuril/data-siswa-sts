@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UserExport;
 
 class UserController extends Controller
 {
+    public function exportExcel()
+    {
+        return Excel::download(new UserExport, 'rekap-data-siswa.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      * php artisan migrate untuk

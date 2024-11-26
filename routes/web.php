@@ -25,6 +25,8 @@ Route::prefix('siswa')->name('siswa.')->group(function () {
     Route::delete('/hapus/{id}', [SiswaController::class, 'destroy'])->name('hapus');
     Route::get('/edit/{id}', [SiswaController::class, 'edit'])->name('edit');
     Route::patch('/edit/{id}', [SiswaController::class, 'update'])->name('edit.formulir');
+    Route::get('/export', [SiswaController::class, 'exportExcel'])->name('export');
+    Route::get('/export/pdf', [SiswaController::class, 'createPDF'])->name('export.pdf');
 });
 
 Route::prefix('/user')->name('user.')->group(function() {
@@ -34,4 +36,5 @@ Route::prefix('/user')->name('user.')->group(function() {
     Route::delete('/hapus/{id}', [UserController::class, 'destroy'])->name('hapus');
     Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
     Route::patch('/edit/{id}', [UserController::class, 'update'])->name('edit.formulir');
+    Route::get('/export', [UserController::class, 'exportExcel'])->name('export');
 });

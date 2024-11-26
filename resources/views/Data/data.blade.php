@@ -11,7 +11,9 @@
             <input type="text" class="form-control me-1" name="search_data" placeholder="Search Data" aria-label="Search">
             <button class=" btn btn-success shadow" type="submit"><i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
         </form>
-        <button class="btn btn-danger" type="button" onclick="window.print()"><i class='fa-solid fa-print'></i> Print </button>
+        <a href="{{ route('siswa.export') }}" class="btn btn-success me-2"><i class='fa-solid fa-print'></i>Export Excel</a>
+        <a href="{{ route('siswa.export.pdf') }}" class="btn btn-warning"><i class="fa-solid fa-file-pdf"></i>PDF</a>
+
     </div>
     <div class="container">
         <table class="table table-bordered table-stripped mt-3">
@@ -41,8 +43,7 @@
 
                             <td class="d-flex">
                                 <a href={{ route('siswa.edit', $item['id']) }} class="btn btn-primary me-2">Edit</a>
-                                <button class="btn btn-danger btn-sm"
-                                    onclick="showModal('{{ $item->id }}', '{{ $item->name }}')">Hapus</button>
+                                <button class="btn btn-danger btn-sm" onclick="showModal('{{ $item->id }}', '{{ $item->name }}')">Hapus</button>
                             </td>
                         </tr>
                     @endforeach

@@ -4,9 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SiswaExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SiswaController extends Controller
 {
+    public function exportExcel()
+    {
+        return Excel::download(new SiswaExport, 'rekap-data-siswa.xlsx');
+    }
+
+    public function createPDF() {
+        // ambil data yg akan ditampilkan pada pdf, bisa juga dengan where atau eloquent lainnya dan jangan gunakan pagination
+        $siswa = Siswa::all()->toArray();
+        // kirim data yg diambil kepada view yg akan ditampilkan, kirim dengan inisial
+        view()->share('siswa',$siswa);
+        // panggil view blade yg akan dicetak pdf serta data yg akan digunakan
+        $pdf = Pdf::loadview('Data.pdf', $siswa);
+        // download PDF file dengan nama tertentu
+        return $pdf->download('Data Siswa.pdf');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -44,21 +63,21 @@ class SiswaController extends Controller
 
             'name' => 'required',
             'nis' => 'required|numeric|unique:siswa,nis',
-            'email' => 'required',
             'rayon' => 'required',
+            'email' => 'required',
         ], [
             'name.required' => 'Nama siswa harus diisi!',
             'nis.required' => 'NIS siswa harus diisi!',
-            'email.required' => 'Email siswa harus diisi!',
             'rayon.required' => 'rayon siswa harus diisi!',
+            'email.required' => 'Email siswa harus diisi!',
             'nis.unique' => 'NIS siswa sudah ada!',
         ]);
 
         $tambahData = Siswa::create([
             'name' => $request->name,
             'nis' => $request->nis,
-            'email' => $request->email,
             'rayon' => $request->rayon,
+            'email' => $request->email,
         ]);
         //redirect() => untuk mengalihkan pengguna ke halaman atau tindakan lain.
         if ($tambahData) {
@@ -103,15 +122,15 @@ class SiswaController extends Controller
         $request->validate([
             'name' => 'required',
             'nis' => 'required|numeric',
-            'email' => 'required',
             'rayon' => 'required',
+            'email' => 'required',
         ]);
 
         Siswa::where('id', $id)->update([
             'name' => $request->name,
             'nis' => $request->nis,
-            'email' => $request->email,
             'rayon' => $request->rayon,
+            'email' => $request->email,
         ]);
         //redirect() => untuk mengalihkan pengguna ke halaman atau tindakan lain.
         return redirect()->route('siswa.data')->with('success', 'Berhasil Memperbarui Data');

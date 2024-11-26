@@ -11,10 +11,11 @@
     <div class="container">
         <div class="d-flex">
             <a href="{{ route('user.tambah') }}" class="btn btn-primary me-2">+ Tambah Akun</a>
-            <form action="{{ route('user.data') }}" role="search" class="d-flex" method="GET">
+            <form action="{{ route('user.data') }}" role="search" class="d-flex me-2" method="GET">
                 <input type="text" class="form-control me-2" name="search_data" placeholder="Search Data" aria-label="Search">
                 <button class=" btn btn-outline-success" type="submit">Search</button>
             </form>
+            <a href="{{ route('user.export') }}" class="btn btn-success me-2"><i class='fa-solid fa-print'></i>Export Excel</a>
         </div>
 
         <table class="table table-bordered table-stripped mt-3">
